@@ -2,14 +2,22 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import LoginForm from '../organisms/LoginForm';
+import axios from 'axios';
 
 const LoginScreen = () => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Lógica de login aqui
-    console.log('Login attempt with:', { username, password });
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/users', {
+        username,
+        password,
+      });
+      console.log(response.data);
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível fazer o login');
+    }
   };
 
   return (
