@@ -1,22 +1,22 @@
-// src/components/templates/LoginScreen.js
-import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Alert, Button } from 'react-native';
 import LoginForm from '../organisms/LoginForm';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../store/authSlice';
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.auth);
+
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/users', {
-        username,
-        password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      Alert.alert('Erro', 'Não foi possível fazer o login');
+      await dispatch(loginUser({ username, password })).unwrap();
+      navigation.navigate('Home');
+    } catch (err) {
+      Alert.alert('Erro', `Não foi possível fazer o login: ${error || err.message}`);
     }
   };
 
@@ -29,6 +29,7 @@ const LoginScreen = () => {
         onPasswordChange={setPassword}
         onSubmit={handleLogin}
       />
+      
     </View>
   );
 };
