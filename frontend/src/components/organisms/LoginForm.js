@@ -32,7 +32,7 @@ const LoginForm = ({
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <Button style={styles.button} title="Criar Conta" onPress={() => navigation.navigate('Signup')} />
+          <Button style={styles.button} title="Criar Conta" onPress={() => navigation.navigate('Cadastro')} />
           <Button style={styles.button} title="Login" onPress={onSubmit} />
         </View>
       </View>

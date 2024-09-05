@@ -1,23 +1,35 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Avatar, Banner, Text } from 'react-native-paper';
+import BarButton from '../organisms/BarButton';
+import { View, StyleSheet } from 'react-native';
 
-const HomeScreen = () => {
+export default function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Bem-vindo à Página Inicial!</Text>
+    <View style={{ flex: 1 }}>
+
+      <View style={styles.userInfo}>
+        <Avatar.Image size={64} source={{ uri: 'https://example.com/user.png' }} />
+        <View style={styles.userDetails}>
+          <Banner visible={true} actions={[]}>
+            <Text>Nome do Usuário</Text>
+          </Banner>
+        </View>
+      </View>
+
+      <View style={{ flex: 1 }}>
+        <BarButton />
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  userInfo: {
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 16,
   },
-  text: {
-    fontSize: 24,
+  userDetails: {
+    marginLeft: 16,
   },
 });
-
-export default HomeScreen;
