@@ -1,35 +1,27 @@
-import * as React from 'react';
-import { Avatar, Banner, Text } from 'react-native-paper';
+// src/components/pages/HomeScreen.js
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import BarButton from '../organisms/BarButton';
-import { View, StyleSheet } from 'react-native';
+import UserInfo from '../organisms/UserInfo'; // Importa o novo componente
+import { useNavigation } from '@react-navigation/native';
+export default function HomeScreen() {
+  const user = useSelector((state) => state.auth.user);
+  const navigation = useNavigation(); 
 
-export default function HomeScreen({ navigation }) {
+
+  if (!user) {
+    return <Text>Carregando...</Text>;
+  }
+
   return (
     <View style={{ flex: 1 }}>
+      <UserInfo user={user} onPressProfile={() => alert('Perfil pressionado!')}  navigation={navigation} />
 
-      <View style={styles.userInfo}>
-        <Avatar.Image size={64} source={{ uri: 'https://example.com/user.png' }} />
-        <View style={styles.userDetails}>
-          <Banner visible={true} actions={[]}>
-            <Text>Nome do Usuário</Text>
-          </Banner>
-        </View>
-      </View>
+      <BarButton />
 
-      <View style={{ flex: 1 }}>
-        <BarButton />
-      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  userInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
-  userDetails: {
-    marginLeft: 16,
-  },
-});
+

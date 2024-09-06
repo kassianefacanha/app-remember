@@ -1,47 +1,57 @@
-// src/components/pages/SingupScreen.js
-import React, { useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import SignupForm from '../organisms/SignupForm';
+// src/components/pages/EditProfileScreen.js
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import ProfileForm from '../organisms/ProfileForm'; // Componente de formulário para edição
 import AlertCustom from '../atoms/AlertCustom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signupUser } from '../../store/authSlice';
+import { updateUser } from '../../store/authSlice'; // Ação para atualizar o usuário
 import { useNavigation } from '@react-navigation/native';
 
-const SignupScreen = () => {
+const EditProfileScreen = () => {
     const dispatch = useDispatch();
-    const navigation = useNavigation(); 
-    const { error } = useSelector((state) => state.auth);
+    const navigation = useNavigation();
+    const { user, error } = useSelector((state) => state.auth);
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [cep, setCep] = useState('');
+    const [username, setUsername] = useState(user.username || '');
+    const [email, setEmail] = useState(user.email || '');
+    const [name, setName] = useState(user.name || '');
+    const [cep, setCep] = useState(user.cep || '');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState({ title: '', message: '' });
 
-    const handleSignup = async () => {
+    useEffect(() => {
+        // Atualiza o estado quando o usuário muda
+        if (user) {
+            setUsername(user.username);
+            setEmail(user.email);
+            setName(user.name);
+            setCep(user.cep);
+        }
+    }, [user]);
+
+    const handleUpdate = async () => {
         try {
-            await dispatch(signupUser({
+            await dispatch(updateUser({
                 username,
                 email,
                 name,
                 cep,
                 password
             })).unwrap();
-            navigation.navigate('Login');
-            setAlertMessage({ title: 'Sucesso', message: 'Cadastro realizado com sucesso!' });
+            setAlertMessage({ title: 'Sucesso', message: 'Perfil atualizado com sucesso!' });
             setAlertVisible(true);
         } catch (err) {
-            setAlertMessage({ title: 'Erro', message: `Não foi possível realizar o cadastro: ${error || err.message}` });
+            setAlertMessage({ title: 'Erro', message: `Não foi possível atualizar o perfil: ${error || err.message}` });
             setAlertVisible(true);
         }
     };
 
     const handleAlertClose = () => {
         setAlertVisible(false);
+        navigation.goBack(); // Volta para a tela anterior após fechar o alerta
     };
 
     return (
@@ -50,7 +60,7 @@ const SignupScreen = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <ScrollView contentContainerStyle={styles.scrollView}>
-                <SignupForm
+                <ProfileForm
                     username={username}
                     email={email}
                     name={name}
@@ -63,7 +73,7 @@ const SignupScreen = () => {
                     onCepChange={setCep}
                     onPasswordChange={setPassword}
                     onConfirmPasswordChange={setConfirmPassword}
-                    onSubmit={handleSignup}
+                    onSubmit={handleUpdate}
                 />
 
                 <AlertCustom
@@ -88,4 +98,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignupScreen;
+export default EditProfileScreen;

@@ -1,3 +1,4 @@
+// src/components/organisms/BarButton.js
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
@@ -16,11 +17,11 @@ const BarButton = () => {
                     onPress={() => { }} 
                 />
                 <Appbar.Action 
-                    icon={() => <View style={styles.iconContainer}><Icon name="mic" size={32} color={theme.colors.primary} /></View>} 
+                    icon={() =><Icon name="home" size={24} color={theme.colors.primary} />} 
                     onPress={() => { }} 
                 />
                 <Appbar.Action 
-                    icon={() => <Icon name="home" size={24} color={theme.colors.primary} />} 
+                    icon={() => <Icon name="mic" size={24} color={theme.colors.primary} />} 
                     onPress={() => { }} 
                 />
             </Appbar>

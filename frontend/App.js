@@ -7,6 +7,7 @@ import { IconButton } from 'react-native-paper';
 import LoginScreen from './src/components/pages/LoginScreen';
 import HomeScreen from './src/components/pages/HomeScreen';
 import SignupScreen from './src/components/pages/SignupScreen';
+import EditProfileScreen from './src/components/pages/EditProfileScreen'; // Importe a tela de edição de perfil
 
 const Stack = createStackNavigator();
 
@@ -16,18 +17,20 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen 
-          name="Login" 
-          component={LoginScreen}
-          options={{
-            title: 'Login',
-            headerStyle: { backgroundColor: '#6750a4' },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },}}   />
+            name="Login" 
+            component={LoginScreen}
+            options={{
+              title: 'Login',
+              headerStyle: { backgroundColor: '#6750a4' },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }} 
+          />
           <Stack.Screen 
             name="Início" 
-            component={HomeScreen}  
+            component={HomeScreen}
             options={{
               title: 'Início',
               headerStyle: { backgroundColor: '#6750a4' },
@@ -38,15 +41,15 @@ const App = () => {
               headerLeft: () => (
                 <IconButton
                   icon="menu"
-                  color="white"
+                  iconColor="white"
                   size={28}
-                  onPress={() => alert('Perfil pressionado!')}
+                  onPress={() => alert('Menu pressionado!')}
                 />
               ),
               headerRight: () => (
                 <IconButton
                   icon="logout"
-                  color="white"
+                  iconColor="white"
                   size={28}
                   onPress={() => alert('Sair pressionado!')}
                 />
@@ -54,15 +57,29 @@ const App = () => {
             }} 
           />
           <Stack.Screen 
-           options={{
-            title: 'Cadastro',
-            headerStyle: { backgroundColor: '#6750a4' },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },}}  
             name="Cadastro" 
-            component={SignupScreen} />
+            component={SignupScreen}
+            options={{
+              title: 'Cadastro',
+              headerStyle: { backgroundColor: '#6750a4' },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }} 
+          />
+          <Stack.Screen 
+            name="Editar Perfil" 
+            component={EditProfileScreen} 
+            options={{
+              title: 'Editar Perfil',
+              headerStyle: { backgroundColor: '#6750a4' },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }} 
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

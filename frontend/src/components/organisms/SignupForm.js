@@ -1,3 +1,4 @@
+// src/components/organisms/Singup.js
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import FormField from '../molecules/FormField';
