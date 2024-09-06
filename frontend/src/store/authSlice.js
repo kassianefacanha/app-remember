@@ -13,8 +13,8 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ username, p
   return response;
 });
 
-export const signupUser = createAsyncThunk('auth/signupUser', async ({ username, email, name, city, street, neighborhood, number, cep, password }) => {
-  const response = await signup({ username, email, name, city, street, neighborhood, number, cep, password });
+export const signupUser = createAsyncThunk('auth/signupUser', async ({ username, email, name, password }) => {
+  const response = await signup({ username, email, name, password });
   return response;
 });
 

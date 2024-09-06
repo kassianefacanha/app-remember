@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 // Rota para criar um novo usuário
 router.post('/', async (req, res) => {
-  const { name, email, username, password, city, street, neighborhood, number, cep } = req.body;
+  const { name, email, username, password } = req.body;
 
   try {
     const user = new User({
@@ -23,11 +23,6 @@ router.post('/', async (req, res) => {
       email,
       username,
       password,
-      city,
-      street,
-      neighborhood,
-      number,
-      cep,
     });
 
     const newUser = await user.save();

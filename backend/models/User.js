@@ -20,31 +20,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  city: {
-    type: String,
-    required: true,
-  },
-  street: {
-    type: String,
-    required: true,
-  },
-  neighborhood: {
-    type: String,
-    required: true,
-  },
-  number: {
-    type: String,
-    required: true,
-  },
-  cep: {
-    type: String,
-    required: true,
-  },
+  }
 });
 
 
-// Criptografa a senha antes de salvar o usuário
 UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
 
@@ -57,7 +36,6 @@ UserSchema.pre('save', async function(next) {
   }
 });
 
-// Verifica se a senha fornecida é a correta
 UserSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
