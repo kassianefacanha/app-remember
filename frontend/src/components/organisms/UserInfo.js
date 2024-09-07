@@ -1,9 +1,7 @@
 // src/components/organisms/UserInfo.js
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import { useTheme } from 'react-native-paper';
-import { launchImageLibrary } from 'react-native-image-picker';
 
 
 const UserInfo = ({ user, onPressProfile, navigation }) => {

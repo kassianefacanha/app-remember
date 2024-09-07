@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import BarButton from '../organisms/BarButton';
-import UserInfo from '../organisms/UserInfo'; // Importa o novo componente
+import UserInfo from '../organisms/UserInfo';
 import { useNavigation } from '@react-navigation/native';
 export default function HomeScreen() {
   const user = useSelector((state) => state.auth.user);
