@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
-import { Provider as PaperProvider, IconButton, Modal, Portal, Button } from 'react-native-paper'; // Adicionando Modal e Portal
+import { Provider as PaperProvider, IconButton } from 'react-native-paper';
 import { store } from './src/store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,7 +10,9 @@ import LoginScreen from './src/components/pages/LoginScreen';
 import HomeScreen from './src/components/pages/HomeScreen';
 import SignupScreen from './src/components/pages/SignupScreen';
 import EditProfileScreen from './src/components/pages/EditProfileScreen';
-import Menu from './src/components/organisms/Menu'; // Importa o componente Menu
+import AgendaScreen from './src/components/pages/AgendaScreen';
+import MenuModal from './src/components/organisms/MenuModal';
+import ConfigScreen from './src/components/pages/ConfigScreen';
 
 
 const Stack = createStackNavigator();
@@ -34,18 +36,12 @@ const LogoutButton = ({ navigation }) => {
 };
 
 const App = () => {
-  const [menuVisible, setMenuVisible] = React.useState(false); 
-  const [active, setActive] = React.useState('first'); 
-
-  const menuOptions = [
-    { label: 'First Item', value: 'first' },
-    { label: 'Second Item', value: 'second' },
-    { label: 'Third Item', value: 'third' },
-  ];
+  const [menuVisible, setMenuVisible] = React.useState(false);
+  const [active, setActive] = React.useState('first');
 
   const handleOptionSelect = (value) => {
-    setActive(value); 
-    setMenuVisible(false); 
+    setActive(value);
+    setMenuVisible(false);
   };
 
   return (
@@ -76,7 +72,7 @@ const App = () => {
                     icon="menu"
                     iconColor="white"
                     size={28}
-                    onPress={() => setMenuVisible(true)} 
+                    onPress={() => setMenuVisible(true)}
                   />
                 ),
                 headerRight: () => <LogoutButton navigation={navigation} />,
@@ -102,19 +98,34 @@ const App = () => {
                 headerTitleStyle: { fontWeight: 'bold' },
               }}
             />
+            <Stack.Screen
+              name="Agenda"
+              component={AgendaScreen}
+              options={{
+                title: 'Agenda',
+                headerStyle: { backgroundColor: '#6750a4' },
+                headerTintColor: '#fff',
+                headerTitleStyle: { fontWeight: 'bold' },
+              }}
+            />
+            <Stack.Screen
+              name="Configurações"
+              component={ConfigScreen}
+              options={{
+                title: 'Configurações',
+                headerStyle: { backgroundColor: '#6750a4' },
+                headerTintColor: '#fff',
+                headerTitleStyle: { fontWeight: 'bold' },
+              }}
+            />
+
           </Stack.Navigator>
 
-          <Portal>
-            <Modal visible={menuVisible} onDismiss={() => setMenuVisible(false)}>
-              <Menu
-                title="Menu"
-                options={menuOptions}
-                activeOption={active}
-                onOptionSelect={handleOptionSelect}
-              />
-              <Button onPress={() => setMenuVisible(false)}>Fechar Menu</Button>
-            </Modal>
-          </Portal>
+          <MenuModal
+            visible={menuVisible}
+            onDismiss={() => setMenuVisible(false)}
+            activeOption={active}
+          />
         </NavigationContainer>
       </PaperProvider>
     </Provider>
